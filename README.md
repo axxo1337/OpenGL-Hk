@@ -1,5 +1,6 @@
 # OpenGL-Hk
 This is a POC of how to hook OpenGL I made because of how many people came to me after watching one of my videos about it.
+TO NOTE : Make sure to test on x64 games only
 
 ## How it works?
 All it does is get the addr of the function SwapBuffers using the export symbol from `opengl32.dll`.
