@@ -62,14 +62,16 @@ bool __stdcall Hooks::wglSwapBuffers(HDC hDc)
     {
         newContext = wglCreateContext(hDc);
         wglMakeCurrent(hDc, newContext);
+
+        GLint viewport[4];
+        glGetIntegerv(GL_VIEWPORT, viewport);
+        glViewport(0, 0, viewport[2], viewport[3]);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-
-        glOrtho(0.0, 640, 480, 0.0, 1.0, -1.0);
-
+        glOrtho(0, viewport[2], viewport[3], 0, -1, 1);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-        glClearColor(0, 0, 0, 1.0);
+        glDisable(GL_DEPTH_TEST);
 
         gui = std::make_unique<GUI>(hWnd);
 
