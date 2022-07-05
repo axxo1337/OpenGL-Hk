@@ -11,6 +11,7 @@ class GUI final
 public:
 	GUI(HWND& hWnd);
 	void Draw();
+	void Shutdown();
 public:
 	bool draw = true;
 };

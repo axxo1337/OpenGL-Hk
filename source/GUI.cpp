@@ -27,3 +27,10 @@ void GUI::Draw()
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 }
+
+void GUI::Shutdown()
+{
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui::DestroyContext();
+	ImGui_ImplWin32_Shutdown();
+}

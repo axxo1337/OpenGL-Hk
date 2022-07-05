@@ -31,6 +31,7 @@ Hooks::Hooks(const char* windowName)
 void Hooks::Remove()
 {
     SetWindowLongPtrW(hWnd, GWLP_WNDPROC, (LONG_PTR)oWndProc);
+    gui->Shutdown();
     MH_RemoveHook(swapBuffers);
 }
 
@@ -59,6 +60,7 @@ bool __stdcall Hooks::wglSwapBuffers(HDC hDc)
     static bool init = false;
     if (!init)
     {
+        newContext = wglCreateContext(hDc);
         wglMakeCurrent(hDc, newContext);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
