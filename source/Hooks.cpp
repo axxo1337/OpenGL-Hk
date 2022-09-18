@@ -1,37 +1,28 @@
 #include "Hooks.h"
 
-#include <iostream>
-
-#include "GUI.h"
-
-typedef BOOL(__stdcall* twglSwapBuffers) (HDC hDc);
-twglSwapBuffers owglSwapBuffers;
-WNDPROC oWndProc;
-HWND hWnd;
-
 Hooks::Hooks(const char* windowName)
 {
-    { // Hook WndProc
-        while (!hWnd)
-            hWnd = FindWindowA(0, windowName);
-        oWndProc = (WNDPROC)SetWindowLongPtrW(hWnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
-    }
+    // Hook WndProc
+    while (!hWnd)
+        hWnd = FindWindowA(0, windowName);
+    oWndProc = (WNDPROC)SetWindowLongPtrW(hWnd, GWLP_WNDPROC, (LONG_PTR)WndProc);
+    
+    MH_Initialize();
 
-    { // Hook OpenGL
-        swapBuffers = (void*)GetProcAddress(GetModuleHandle(L"opengl32.dll"), "wglSwapBuffers");
-        std::cout << "[+] SwapBuffers addr : " << (uintptr_t)swapBuffers << std::endl;
+    // Hook OpenGL
+    swapBuffers = (void*)GetProcAddress(GetModuleHandle(L"opengl32.dll"), "wglSwapBuffers");
+    std::cout << "[+] SwapBuffers addr : " << (uintptr_t)swapBuffers << std::endl;
 
-        MH_Initialize();
-        MH_CreateHook(swapBuffers, &wglSwapBuffers, (LPVOID*)&owglSwapBuffers);
-        MH_EnableHook(swapBuffers);
-        std::cout << "[+] Hooked OpengGL! Origin : " << (uintptr_t)owglSwapBuffers << std::endl;
-    }
+    MH_CreateHook(swapBuffers, &wglSwapBuffers, (LPVOID*)&oWglSwapBuffers);
+    MH_EnableHook(swapBuffers);
+    std::cout << "[+] Hooked OpengGL! Origin : " << (uintptr_t)oWglSwapBuffers << std::endl;
 }
 
 void Hooks::Remove()
 {
     SetWindowLongPtrW(hWnd, GWLP_WNDPROC, (LONG_PTR)oWndProc);
-    gui->Shutdown();
+
+    gui->Remove();
     MH_RemoveHook(swapBuffers);
 }
 
@@ -49,7 +40,7 @@ LRESULT __stdcall Hooks::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPar
     if (gui && gui->draw && ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
         return true;
 
-    return CallWindowProcA(oWndProc, hWnd, msg, wParam, lParam);
+    return CallWindowProcA(hooks->oWndProc, hWnd, msg, wParam, lParam);
 }
 
 bool __stdcall Hooks::wglSwapBuffers(HDC hDc)
@@ -73,7 +64,7 @@ bool __stdcall Hooks::wglSwapBuffers(HDC hDc)
         glLoadIdentity();
         glDisable(GL_DEPTH_TEST);
 
-        gui = std::make_unique<GUI>(hWnd);
+        gui = std::make_unique<GUI>(hooks->hWnd);
 
         init = true;
     }
@@ -85,7 +76,7 @@ bool __stdcall Hooks::wglSwapBuffers(HDC hDc)
 
     wglMakeCurrent(hDc, oContext);
 
-    return owglSwapBuffers(hDc);
+    return hooks->oWglSwapBuffers(hDc);
 }
 
 //=================================================

@@ -334,7 +334,7 @@ void    ImGui_ImplOpenGL3_Shutdown()
 void    ImGui_ImplOpenGL3_NewFrame()
 {
     ImGui_ImplOpenGL3_Data* bd = ImGui_ImplOpenGL3_GetBackendData();
-    IM_ASSERT(bd != NULL && "Did you call ImGui_ImplOpenGL3_Init()?");
+    IM_ASSERT(bd != NULL && "Did you call ImGui_ImplOpenGL3_Init() mf?");
 
     if (!bd->ShaderHandle)
         ImGui_ImplOpenGL3_CreateDeviceObjects();
@@ -857,7 +857,7 @@ bool    ImGui_ImplOpenGL3_CreateDeviceObjects()
     return true;
 }
 
-void    ImGui_ImplOpenGL3_DestroyDeviceObjects()
+void ImGui_ImplOpenGL3_DestroyDeviceObjects()
 {
     ImGui_ImplOpenGL3_Data* bd = ImGui_ImplOpenGL3_GetBackendData();
     if (bd->VboHandle)      { glDeleteBuffers(1, &bd->VboHandle); bd->VboHandle = 0; }

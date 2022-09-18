@@ -7,7 +7,7 @@
 
 void __stdcall MainThread(HMODULE hMod) 
 {
-	hooks = std::make_unique<Hooks>("Minecraft 1.19");
+	hooks = std::make_unique<Hooks>("Minecraft 1.19.2");
 
 	while (!GetAsyncKeyState(VK_END)) 
 	{
@@ -20,19 +20,16 @@ void __stdcall MainThread(HMODULE hMod)
 
 bool __stdcall DllMain(HINSTANCE hinstDLL, DWORD reason, LPVOID lpReserved)
 {
-	switch (reason) {
-	case DLL_PROCESS_ATTACH: 
+	if (reason == DLL_PROCESS_ATTACH)
 	{
 		AllocConsole();
 		freopen_s((FILE**)stdout, "CONOUT$", "w", stdout);
 		CloseHandle(CreateThread(0, 0, (LPTHREAD_START_ROUTINE)MainThread, hinstDLL, 0, 0));
-	} break;
-
-	case DLL_PROCESS_DETACH: 
+	}
+	else if (reason == DLL_PROCESS_DETACH)
 	{
 		FreeConsole();
 		fclose(stdout);
-	} break;
 	}
 	return true;
 }
