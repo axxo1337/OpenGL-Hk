@@ -8,6 +8,7 @@ All it does is get the addr of the function SwapBuffers using the export symbol 
 
 You can use the WinAPI function <a href="https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getprocaddress">GetProcAddress</a> to do so.
 
-
 ## How can I test it?
 Well simply build using vs compiler and inject the dll in an OpenGL game.
+<br />
+Added Linux support ;)
