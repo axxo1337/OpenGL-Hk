@@ -8,8 +8,6 @@
 #include <ImGui/backends/imgui_impl_win32.h>
 #include <ImGui/backends/imgui_impl_opengl3.h>
 
-#include "Hooks.h"
-
 class GUI final
 {
 public:
