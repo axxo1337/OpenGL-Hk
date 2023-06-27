@@ -1,4 +1,6 @@
-#pragma once
+#ifndef HOOKS_H_
+#define HOOKS_H_
+
 #include <iostream>
 #include <memory>
 #include <mutex>
@@ -9,24 +11,43 @@
 
 #include "GUI.h"
 
-#pragma comment(lib, "libMinHook-x64.lib")
-#pragma comment(lib, "opengl32.lib")
+//#pragma comment(lib, "libMinHook-x64.lib")
+//#pragma comment(lib, "opengl32.lib")
 
 typedef BOOL(__stdcall* twglSwapBuffers) (HDC hDc);
 
 class Hooks
 {
 public:
-	Hooks(const char* windowName);
-	void Remove();
+	Hooks(const Hooks&) = delete;
+	void operator=(const Hooks&) = delete;
+
+	static void Init();
+	static void Destroy();
+	static Hooks* Get();
+	static bool IsInit();
+
 private:
+	void PrivateInit();
+	void PrivateDestroy();
+
+	Hooks()
+	{
+		PrivateInit();
+	}
+
 	static LRESULT __stdcall WndProc(HWND, UINT, WPARAM, LPARAM);
 	static bool    __stdcall wglSwapBuffers(HDC);
+
 public:
 	HWND hWnd                       = nullptr;
 	void* swapBuffers               = nullptr;
 	WNDPROC oWndProc                = nullptr;
 	twglSwapBuffers oWglSwapBuffers = nullptr;
+
+private:
+	static Hooks* p_instance;
+	static std::mutex mutex;
 };
 
-inline std::unique_ptr<Hooks> hooks;
+#endif

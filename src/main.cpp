@@ -5,26 +5,33 @@
 
 #include "Hooks.h"
 
-void __stdcall MainThread(HMODULE hMod) 
+void __stdcall MainThread(HINSTANCE instance) 
 {
-	hooks = std::make_unique<Hooks>("Minecraft 1.19.2");
+	Hooks::Init();
 
 	while (!GetAsyncKeyState(VK_END)) 
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(25));
 	}
 
-	hooks->Remove();
-	FreeLibraryAndExitThread(hMod, 0);
+	Hooks::Destroy();
+	FreeLibraryAndExitThread(instance, 0);
 }
 
-bool __stdcall DllMain(HINSTANCE hinstDLL, DWORD reason, LPVOID lpReserved)
+bool __stdcall DllMain(HINSTANCE instance, DWORD reason, LPVOID p_reserved)
 {
+	static std::thread main_thread;
+
 	if (reason == DLL_PROCESS_ATTACH)
 	{
+		DisableThreadLibraryCalls(instance);
+
 		AllocConsole();
 		freopen_s((FILE**)stdout, "CONOUT$", "w", stdout);
-		CloseHandle(CreateThread(0, 0, (LPTHREAD_START_ROUTINE)MainThread, hinstDLL, 0, 0));
+
+		main_thread = std::thread([instance] { MainThread(instance); });
+		if (main_thread.joinable())
+			main_thread.detach();
 	}
 	else if (reason == DLL_PROCESS_DETACH)
 	{
