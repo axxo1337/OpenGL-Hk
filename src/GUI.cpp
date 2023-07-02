@@ -20,7 +20,7 @@ void GUI::Shutdown()
 void GUI::Draw()
 {
 	static RECT originalClip;
-    	static bool clipped = false;
+    	static bool clipped = true;
 	
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplWin32_NewFrame();
