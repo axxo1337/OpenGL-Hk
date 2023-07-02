@@ -40,10 +40,9 @@ private:
 	static bool    __stdcall wglSwapBuffers(HDC);
 
 public:
-	HWND hWnd                       = nullptr;
-	void* swapBuffers               = nullptr;
-	WNDPROC oWndProc                = nullptr;
-	twglSwapBuffers oWglSwapBuffers = nullptr;
+	HWND hWnd{ nullptr };
+	void* swapBuffers{ nullptr };
+	twglSwapBuffers oWglSwapBuffers{ nullptr };
 
 private:
 	static Hooks* p_instance;

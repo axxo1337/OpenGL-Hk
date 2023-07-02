@@ -1,5 +1,7 @@
 #include "Hooks.h"
 
+static WNDPROC oWndProc{ nullptr };
+
 void Hooks::PrivateInit()
 {
     // To get window handle
@@ -56,22 +58,31 @@ LRESULT __stdcall Hooks::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPar
             return true;
     }
 
-    return CallWindowProcA(Hooks::Get()->oWndProc, hWnd, msg, wParam, lParam);
+    return CallWindowProcA(oWndProc, hWnd, msg, wParam, lParam);
 }
 
 bool __stdcall Hooks::wglSwapBuffers(HDC hDc)
 {
-    static HGLRC oContext = wglGetCurrentContext();
-    static HGLRC newContext = wglCreateContext(hDc);
+    static HGLRC o_context{ wglGetCurrentContext() };
+    static HGLRC new_context{};
+    static GLint last_viewport[4];
+
+    GLint viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
 
     static bool init = false;
-    if (!init)
+    if (!init || viewport[2] != last_viewport[2] || viewport[3] != last_viewport[3])
     {
-        newContext = wglCreateContext(hDc);
-        wglMakeCurrent(hDc, newContext);
+        if (new_context)
+        {
+            wglMakeCurrent(hDc, o_context);
+            GUI::Get()->Shutdown();
+            wglDeleteContext(new_context);
+        }
 
-        GLint viewport[4];
-        glGetIntegerv(GL_VIEWPORT, viewport);
+        new_context = wglCreateContext(hDc);
+        wglMakeCurrent(hDc, new_context);
+
         glViewport(0, 0, viewport[2], viewport[3]);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
@@ -80,17 +91,22 @@ bool __stdcall Hooks::wglSwapBuffers(HDC hDc)
         glLoadIdentity();
         glDisable(GL_DEPTH_TEST);
 
-        GUI::Init(Hooks::Get()->hWnd);
+        if (!GUI::IsInit())
+            GUI::Init(Hooks::Get()->hWnd);
+        else
+            GUI::Get()->ReInit(Hooks::Get()->hWnd);
+
+        memcpy(last_viewport, viewport, sizeof(GLint) * 4);
 
         init = true;
     }
     else
     {
-        wglMakeCurrent(hDc, newContext);
+        wglMakeCurrent(hDc, new_context);
         GUI::Get()->Draw();
     }
 
-    wglMakeCurrent(hDc, oContext);
+    wglMakeCurrent(hDc, o_context);
 
     return Hooks::Get()->oWglSwapBuffers(hDc);
 }

@@ -1,6 +1,6 @@
 #include "GUI.h"
 
-void GUI::PrivateInit(HWND& hWnd)
+void GUI::ReInit(HWND& hWnd)
 {
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -9,7 +9,7 @@ void GUI::PrivateInit(HWND& hWnd)
 	ImGui_ImplOpenGL3_Init();
 }
 
-void GUI::PrivateDestroy()
+void GUI::Shutdown()
 {
 	draw = false;
 	ImGui_ImplOpenGL3_Shutdown();
@@ -55,7 +55,7 @@ void GUI::Destroy()
 	if (p_instance == nullptr)
 		return;
 
-	p_instance->PrivateDestroy();
+	p_instance->Shutdown();
 
 	delete p_instance;
 	p_instance = nullptr;

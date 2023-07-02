@@ -23,14 +23,13 @@ public:
 	static bool IsInit();
 
 	void Draw();
+	void ReInit(HWND& hWnd);
+	void Shutdown();
 
 private:
-	void PrivateInit(HWND& hWnd);
-	void PrivateDestroy();
-
 	GUI(HWND& hWnd)
 	{
-		PrivateInit(hWnd);
+		ReInit(hWnd);
 	}
 
 public:
