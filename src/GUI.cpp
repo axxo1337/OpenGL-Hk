@@ -19,16 +19,30 @@ void GUI::Shutdown()
 
 void GUI::Draw()
 {
+	static RECT originalClip;
+    	static bool clipped = false;
+	
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 	if (draw)
 	{
+		if (clipped)
+		{
+                	GetClipCursor(&originalClip);
+                	ClipCursor(nullptr);
+                	clipped = false;
+            	}
 		ImGui::Begin("OpenGL-Hk");
 		{
 			ImGui::Text("Hello, World!");
 		}
 		ImGui::End();
+	}
+	else if (!clipped)
+	{
+		ClipCursor(&originalClip);
+                clipped = true;
 	}
 	ImGui::EndFrame();
 	ImGui::Render();
