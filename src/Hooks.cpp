@@ -54,8 +54,11 @@ LRESULT __stdcall Hooks::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPar
         if (msg == WM_KEYDOWN && wParam == VK_INSERT)
             GUI::Get()->draw = !GUI::Get()->draw;
 
-        if (GUI::Get()->draw && ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+        if (GUI::Get()->draw)
+        {
+            ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam);
             return true;
+        }
     }
 
     return CallWindowProcA(oWndProc, hWnd, msg, wParam, lParam);
