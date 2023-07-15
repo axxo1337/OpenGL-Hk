@@ -15,7 +15,7 @@ void __stdcall MainThread(HINSTANCE instance)
 	}
 
 	Hooks::Destroy();
-	FreeLibraryAndExitThread(instance, 0);
+	FreeLibrary(instance);
 }
 
 bool __stdcall DllMain(HINSTANCE instance, DWORD reason, LPVOID p_reserved)
