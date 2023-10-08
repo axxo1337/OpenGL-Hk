@@ -1,3 +1,6 @@
+TODO:
+- Rewrite soon
+
 # OpenGL-Hk
 This is a POC of how to hook OpenGL I made because of how many people came to me after watching one of my videos about it. <br />
 TO NOTE : Make sure to test on x64 games only <br /> <br />
@@ -11,4 +14,3 @@ You can use the WinAPI function <a href="https://docs.microsoft.com/en-us/window
 ## How can I test it?
 Well simply build using vs compiler and inject the dll in an OpenGL game.
 <br />
-Added Linux support ;)
