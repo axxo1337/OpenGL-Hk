@@ -124,7 +124,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);libMinHook-x64.lib;opengl32.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);opengl32.lib;imgui.lib;libMinHook-x64.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -145,32 +145,30 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);libMinHook-x64.lib;opengl32.lib</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);opengl32.lib;imgui.lib;libMinHook-x64.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Dependencies\include\ImGui\backends\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="Dependencies\include\ImGui\backends\imgui_impl_win32.cpp" />
-    <ClCompile Include="Dependencies\include\ImGui\imgui.cpp" />
-    <ClCompile Include="Dependencies\include\ImGui\imgui_draw.cpp" />
-    <ClCompile Include="Dependencies\include\ImGui\imgui_tables.cpp" />
-    <ClCompile Include="Dependencies\include\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Dependencies\include\ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="Dependencies\include\ImGui\imgui_impl_win32.cpp" />
     <ClCompile Include="GUI.cpp" />
-    <ClCompile Include="Hooks.cpp" />
+    <ClCompile Include="Hook.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dependencies\include\ImGui\backends\imgui_impl_opengl3.h" />
-    <ClInclude Include="Dependencies\include\ImGui\backends\imgui_impl_win32.h" />
     <ClInclude Include="Dependencies\include\ImGui\imconfig.h" />
     <ClInclude Include="Dependencies\include\ImGui\imgui.h" />
+    <ClInclude Include="Dependencies\include\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="Dependencies\include\ImGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="Dependencies\include\ImGui\imgui_impl_win32.h" />
     <ClInclude Include="Dependencies\include\ImGui\imgui_internal.h" />
+    <ClInclude Include="Dependencies\include\ImGui\imgui_stdlib.h" />
     <ClInclude Include="Dependencies\include\ImGui\imstb_rectpack.h" />
     <ClInclude Include="Dependencies\include\ImGui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\include\ImGui\imstb_truetype.h" />
-    <ClInclude Include="Dependencies\include\minhook\MinHook.h" />
+    <ClInclude Include="Dependencies\include\MinHook.h" />
     <ClInclude Include="GUI.h" />
-    <ClInclude Include="Hooks.h" />
+    <ClInclude Include="Hook.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

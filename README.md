@@ -1,16 +1,14 @@
-TODO:
-- Rewrite soon
-
 # OpenGL-Hk
-This is a POC of how to hook OpenGL I made because of how many people came to me after watching one of my videos about it. <br />
-TO NOTE : Make sure to test on x64 games only <br /> <br />
-![Screenshot](/repo/screen.png "Screenshot")
 
-## How it works?
-All it does is get the addr of the function SwapBuffers using the export symbol from `opengl32.dll`.
+## What is this?
 
-You can use the WinAPI function <a href="https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getprocaddress">GetProcAddress</a> to do so.
+A proof of concept (POC) OpenGL hook I made because many people came to me for question regarding a video I had released <br />
+on YouTube about it.
 
-## How can I test it?
-Well simply build using vs compiler and inject the dll in an OpenGL game.
-<br />
+![Screenshot](/repo/screenshot.png "Screenshot")
+
+## How does it work?
+
+It works by hooking the `wglSwapBuffers` function from OpenGL's library exports. <br />
+
+DISCLAMER: Trying to compile this project for 32-bit using the included libraries will not work. Though the process of hooking OpenGL remains the same.

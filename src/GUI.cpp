@@ -1,77 +1,79 @@
 #include "GUI.h"
 
-void GUI::ReInit(HWND& hWnd)
+static bool is_init{};
+static bool do_draw{true};
+
+//
+// Management functions
+//
+
+bool GUI::init(HWND wnd_handle)
 {
+	if (is_init)
+		return false;
+
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImGui::StyleColorsDark();
-	ImGui_ImplWin32_Init(hWnd);
+	ImGui_ImplWin32_Init(wnd_handle);
 	ImGui_ImplOpenGL3_Init();
+
+	is_init = true;
+
+	return false;
 }
 
-void GUI::Shutdown()
+void GUI::shutdown()
 {
-	draw = false;
+	if (!is_init)
+		return;
+
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
+
+	is_init = false;
 }
 
-void GUI::Draw()
+//
+// Global functions
+//
+
+void GUI::draw()
 {
+	if (!do_draw)
+		return;
+
+	printf("TEST\n");
+
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-	if (draw)
+	ImGui::Begin("OpenGL-Hk");
 	{
-		ImGui::Begin("OpenGL-Hk");
-		{
-			ImGui::Text("Hello, World!");
-		}
-		ImGui::End();
+		ImGui::Text("Hello, World!");
 	}
+	ImGui::End();
 	ImGui::EndFrame();
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 //
-// Singleton stuff (ignore)
+// Get & Set functions
 //
 
-GUI* GUI::p_instance;
-std::mutex GUI::mutex;
-
-void GUI::Init(HWND& hWnd)
+bool GUI::getIsInit()
 {
-	if (p_instance != nullptr)
-		return;
-
-	p_instance = new GUI(hWnd);
+	return is_init;
 }
 
-void GUI::Destroy()
+bool GUI::getDoDraw()
 {
-	if (p_instance == nullptr)
-		return;
-
-	p_instance->Shutdown();
-
-	delete p_instance;
-	p_instance = nullptr;
+	return is_init;
 }
 
-GUI* GUI::Get()
+void GUI::setDoDraw(bool new_value)
 {
-	std::lock_guard<std::mutex> lock(mutex);
-
-	if (p_instance == nullptr)
-		return nullptr; // should init but for practical reasons does not
-
-	return p_instance;
-}
-
-bool GUI::IsInit()
-{
-	return p_instance != nullptr;
+	do_draw = new_value;
 }

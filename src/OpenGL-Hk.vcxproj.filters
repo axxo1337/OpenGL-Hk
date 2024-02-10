@@ -2,62 +2,50 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Hooks.cpp">
-      <Filter>Hooking</Filter>
-    </ClCompile>
-    <ClCompile Include="Dependencies\include\ImGui\imgui.cpp">
+    <ClCompile Include="Dependencies\include\ImGui\imgui_impl_opengl3.cpp">
       <Filter>Dependencies\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\include\ImGui\imgui_draw.cpp">
+    <ClCompile Include="Dependencies\include\ImGui\imgui_impl_win32.cpp">
       <Filter>Dependencies\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Dependencies\include\ImGui\imgui_tables.cpp">
-      <Filter>Dependencies\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Dependencies\include\ImGui\imgui_widgets.cpp">
-      <Filter>Dependencies\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Dependencies\include\ImGui\backends\imgui_impl_win32.cpp">
-      <Filter>Dependencies\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="Dependencies\include\ImGui\backends\imgui_impl_opengl3.cpp">
-      <Filter>Dependencies\ImGui</Filter>
+    <ClCompile Include="Hook.cpp">
+      <Filter>Hook</Filter>
     </ClCompile>
     <ClCompile Include="GUI.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Hooking">
-      <UniqueIdentifier>{b5be1976-b56d-4aad-9a19-2bb35562cece}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Dependencies">
       <UniqueIdentifier>{d5c61b2e-fc4a-4f14-9689-1376e19ca7a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Dependencies\minhook">
-      <UniqueIdentifier>{9f289ef3-ae0c-41ab-be8d-9105b44cb4ab}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dependencies\ImGui">
       <UniqueIdentifier>{4a96feb9-c21a-48c4-abe6-93c8405d4ed5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Hook">
+      <UniqueIdentifier>{db35df7d-97f2-45a5-ad23-88cb3816d874}</UniqueIdentifier>
+    </Filter>
     <Filter Include="GUI">
-      <UniqueIdentifier>{24bad437-6434-4b5c-b760-c439300a602a}</UniqueIdentifier>
+      <UniqueIdentifier>{1a2b9cf3-1b07-4ef6-abad-9589822a24e9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dependencies\include\minhook\MinHook.h">
-      <Filter>Dependencies\minhook</Filter>
-    </ClInclude>
-    <ClInclude Include="Hooks.h">
-      <Filter>Hooking</Filter>
-    </ClInclude>
     <ClInclude Include="Dependencies\include\ImGui\imconfig.h">
       <Filter>Dependencies\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Dependencies\include\ImGui\imgui.h">
       <Filter>Dependencies\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="Dependencies\include\ImGui\imgui_impl_opengl3.h">
+      <Filter>Dependencies\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\include\ImGui\imgui_impl_win32.h">
+      <Filter>Dependencies\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="Dependencies\include\ImGui\imgui_internal.h">
+      <Filter>Dependencies\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\include\ImGui\imgui_stdlib.h">
       <Filter>Dependencies\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Dependencies\include\ImGui\imstb_rectpack.h">
@@ -69,14 +57,17 @@
     <ClInclude Include="Dependencies\include\ImGui\imstb_truetype.h">
       <Filter>Dependencies\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\include\ImGui\backends\imgui_impl_win32.h">
+    <ClInclude Include="Dependencies\include\ImGui\imgui_impl_opengl3_loader.h">
       <Filter>Dependencies\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="Dependencies\include\ImGui\backends\imgui_impl_opengl3.h">
-      <Filter>Dependencies\ImGui</Filter>
+    <ClInclude Include="Hook.h">
+      <Filter>Hook</Filter>
     </ClInclude>
     <ClInclude Include="GUI.h">
       <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\include\MinHook.h">
+      <Filter>Dependencies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
