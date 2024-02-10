@@ -1,43 +1,36 @@
 #ifndef GUI_H_
 #define GUI_H_
 
-#include <memory>
-#include <thread>
-#include <chrono>
-#include <mutex>
+#include <cstdio>
 
 #include <Windows.h>
 #include <ImGui/imgui.h>
-#include <ImGui/backends/imgui_impl_win32.h>
-#include <ImGui/backends/imgui_impl_opengl3.h>
+#include <ImGui/imgui_impl_win32.h>
+#include <ImGui/imgui_impl_opengl3.h>
 
-class GUI final
+namespace GUI
 {
-public:
-	GUI(const GUI&) = delete;
-	void operator=(const GUI&) = delete;
+	//
+	// Management functions
+	//
 
-	static void Init(HWND& hWnd);
-	static void Destroy();
-	static GUI* Get();
-	static bool IsInit();
+	bool init(HWND wnd_handle);
+	void shutdown();
 
-	void Draw();
-	void ReInit(HWND& hWnd);
-	void Shutdown();
+	//
+	// Global functions
+	//
 
-private:
-	GUI(HWND& hWnd)
-	{
-		ReInit(hWnd);
-	}
+	void draw();
 
-public:
-	bool draw = true;
+	//
+	// Get & Set functions
+	//
 
-private:
-	static GUI* p_instance;
-	static std::mutex mutex;
-};
+	bool getIsInit();
+	bool getDoDraw();
+
+	void setDoDraw(bool new_value);
+}
 
 #endif
