@@ -2,7 +2,7 @@
 
 ## What is this?
 
-A proof of concept (POC) OpenGL hook I made because many people came to me for question regarding a video I had released <br />
+A proof of concept (POC) OpenGL hook I made because many people came to me for question regarding a video I had released
 on YouTube about it.
 
 ![Screenshot](/repo/screenshot.png "Screenshot")
