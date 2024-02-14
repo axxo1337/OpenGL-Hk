@@ -70,7 +70,7 @@ bool GUI::getIsInit()
 
 bool GUI::getDoDraw()
 {
-	return is_init;
+	return do_draw;
 }
 
 void GUI::setDoDraw(bool new_value)
