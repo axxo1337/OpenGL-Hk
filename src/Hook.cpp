@@ -110,7 +110,7 @@ LRESULT __stdcall WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 bool __stdcall wglSwapBuffers(HDC hDc)
 {
-	static  HGLRC origin_context{ wglGetCurrentContext() };
+	HGLRC origin_context{ wglGetCurrentContext() };
 	static HGLRC new_context{};
 
 	if (static bool was_init{}; was_init == false)
